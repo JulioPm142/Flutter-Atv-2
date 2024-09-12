@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   List<dynamic> dataList = [];
 
-  List<dynamic> users = ['a'];
+  List<dynamic> users = ['']; //criando uma lista para colocar os dados do http
 
   // método assíncrono para consumir informações de uma api
   Future<void> fetchData() async {
@@ -42,6 +42,7 @@ class MyAppState extends State<MyApp> {
         users = jsonDecode(responseUsuario.body);
       });
 
+      //confirmando que está recebendo as informações corretamente
       users.forEach((user) {
         print('Name: ${user['name']}');
         print('Email: ${user['email']}');
@@ -72,13 +73,13 @@ class MyAppState extends State<MyApp> {
         body: ListView.builder(
           itemCount: users.length,
           itemBuilder: (BuildContext context, int index) {
-            final item = users[index];
+            final item = users[index]; //deixando item como um usuario da lista 
 
             return Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                 decoration: BoxDecoration(
-                  color: item['id'] % 2 == 0
+                  color: item['id'] % 2 == 0 // trocar cor do fundo baseado no id do usuario
                       ? const Color.fromARGB(61, 119, 119, 236)
                       : const Color.fromARGB(
                           47, 34, 34, 34), // Cor de fundo do retângulo
@@ -88,7 +89,7 @@ class MyAppState extends State<MyApp> {
                   title: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      '${item['name']}',
+                      '${item['name']}', //mostrando o nome do usuario como um título para cada item
                       style: TextStyle(color: Colors.black, fontSize: 26),
                     ),
                   ),
@@ -98,16 +99,16 @@ class MyAppState extends State<MyApp> {
                     child: Column(
                       children: [
                         SizedBox(
-                          child: Row(
+                          child: Row(// usando um Row para separar os itens em 2 grupos esquerda e direita
                             children: [
                               const Icon(
                                 Icons.badge_outlined,
                                 size: 100,
                               ),
-                              Flexible(
+                              Flexible( //usando flexible para não ter overflow em telas pequenas
                                   child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start, //usando o clomun para deixar o texto um em baixo do outro começando pela esquerda
                                       children: [
                                     Text(
                                         style: TextStyle(
@@ -115,7 +116,7 @@ class MyAppState extends State<MyApp> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                         textAlign: TextAlign.center,
-                                        "Personal"),
+                                        "Personal"),  //usando decorações para fazer um subtitulo dentro da lista
                                     Text('Username: ${item['username']}'),
                                     Text('Email: ${item['email']}'),
                                     Text('Phone: ${item['phone']}'),
@@ -178,11 +179,11 @@ class MyAppState extends State<MyApp> {
                                     Text('Nome: ${item['company']['name']}'),
                                     Text(
                                       'CatchPhrase: ${item['company']['catchPhrase']}',
-                                      overflow: TextOverflow.ellipsis,
+                                      
                                     ),
                                     Text(
                                       'BS: ${item['company']['bs']}',
-                                      overflow: TextOverflow.ellipsis,
+                                      
                                     )
                                   ]))
                             ],
